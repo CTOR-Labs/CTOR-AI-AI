@@ -12,8 +12,8 @@ export function randomBot(board, color) {
   const legalMoves = [];
 
   // Collect all empty cells
-  for (let row = 0; row < 8; row++) {
-    for (let col = 0; col < 8; col++) {
+  for (let row = 0; row < 10; row++) {
+    for (let col = 0; col < 10; col++) {
       if (board[row][col] === ".") {
         legalMoves.push({ row, col });
       }
