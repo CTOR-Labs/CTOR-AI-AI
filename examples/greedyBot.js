@@ -13,8 +13,8 @@ export function greedyBot(board, color) {
   let bestMove = null;
   let bestScore = -1;
 
-  for (let row = 0; row < 8; row++) {
-    for (let col = 0; col < 8; col++) {
+  for (let row = 0; row < 10; row++) {
+    for (let col = 0; col < 10; col++) {
       if (board[row][col] !== ".") continue;
 
       // If evaluateMove is available in your platform:
