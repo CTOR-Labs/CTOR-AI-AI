@@ -47,7 +47,7 @@ Where:
 
 | Parameter | Description |
 |----------|-------------|
-| `board` | 8×8 array with `"R"`, `"B"`, `"."` |
+| `board` | 10×10 array with `"R"`, `"B"`, `"."` |
 | `color` | `"R"` or `"B"` |
 | return | `{ row, col }` — your chosen move |
 
