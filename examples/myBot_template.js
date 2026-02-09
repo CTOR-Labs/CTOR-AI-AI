@@ -52,8 +52,8 @@
 
 export function myBot(board, color) {
   // Loop through all board cells
-  for (let row = 0; row < 8; row++) {
-    for (let col = 0; col < 8; col++) {
+  for (let row = 0; row < 10; row++) {
+    for (let col = 0; col < 10; col++) {
 
       // Check if the cell is empty
       if (board[row][col] === ".") {
