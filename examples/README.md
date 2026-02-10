@@ -1,65 +1,56 @@
+NEW examples/README.md (Markdown, English, GitHub‑ready)
+markdown
 # CTOR Browser Edition — Example Bots
 
-This folder contains reference bots for the CTOR Browser Edition platform.
+This folder contains reference bots for the **CTOR Browser Edition** platform.  
+These examples demonstrate different heuristic ideas and serve as learning tools for students.
 
-## Included Bots
+All bots in this folder follow the CTOR Browser Edition Bot API:
 
-| File | Description |
-|------|-------------|
-| 01_randomBot.js | Pure random placement |
-| 02_centerBot.js | Prefers central positions |
-| 03_borderAvoidBot.js | Avoids edges of the board |
-| 04_aggressiveBot.js | Plays next to enemy pieces |
-| 05_defensiveBot.js | Avoids dangerous positions |
-
-## Templates
-
-| File | Purpose |
-|------|---------|
-| myBot_template.js | Starting point for student‑written bots |
-| LLM_bot_prompt_template.js | Prompt template for generating bots with AI |
-
-All bots follow the CTOR Browser Edition API:
-
+```js
 function bot(board, player) { ... }
+No imports, no exports, no modules — each bot is a standalone .js file.
 
-Code
+📁 Included Example Bots
+File	Description
+01_randomBot.js	Pure random placement
+02_centerBot.js	Prefers central positions
+03_borderAvoidBot.js	Avoids edges of the board
+04_aggressiveBot.js	Plays next to enemy pieces
+05_defensiveBot.js	Avoids dangerous positions
+📁 Templates
+File	Purpose
+myBot_template.js	Starter template for manually written bots
+LLM_bot_prompt_template.js	Prompt template for generating bots using AI (LLM)
+Students may freely modify these templates or use them as inspiration.
 
-No exports, no imports, no modules.
+🧠 Algorithm Explanations for Example Bots
+Below is a short explanation of the strategy behind each example bot.
 
-Students may freely modify these bots or use them as inspiration for their own strategi
-
-Example Bots — Algorithm Explanations
-This folder contains several reference bots for CTOR Browser Edition.
-Each bot demonstrates a different heuristic idea and can be used as a learning tool for students.
-
-
-Below is a detailed explanation of the algorithm behind each example bot.
-
-1. 01_randomBot.js — Pure Random Strategy
+01_randomBot.js — Pure Random Strategy
 Idea
-This bot selects a random empty cell and places a piece there.
+Select a random empty cell and place a piece there.
 
 Algorithm
-Scan the board for all empty cells (".").
+Scan the board for all empty cells ".".
 
 Collect them into a list.
 
 Choose one at random.
 
 Strengths
-Extremely simple.
+Extremely simple
 
-Useful as a baseline for testing.
+Useful as a baseline for testing
 
 Weaknesses
-No strategy.
+No strategy
 
-Easily defeated by any heuristic bot.
+Easily defeated by any heuristic bot
 
-2. 02_centerBot.js — Center‑Seeking Strategy
+02_centerBot.js — Center‑Seeking Strategy
 Idea
-The bot prefers positions closer to the center of the board (5,5).
+Prefer positions closer to the center of the board (5,5).
 
 Algorithm
 For each empty cell, compute Manhattan distance to the center.
@@ -67,56 +58,56 @@ For each empty cell, compute Manhattan distance to the center.
 Choose the cell with the smallest distance.
 
 Strengths
-Central control is often advantageous in toroidal games.
+Central control is often advantageous
 
-More stable than random play.
+More stable than random play
 
 Weaknesses
-Predictable.
+Predictable
 
-Ignores opponent positions.
+Ignores opponent positions
 
-3. 03_borderAvoidBot.js — Edge‑Avoidance Strategy
+03_borderAvoidBot.js — Edge‑Avoidance Strategy
 Idea
-The bot avoids placing pieces near the edges of the board.
+Avoid placing pieces near the edges of the board.
 
 Algorithm
-Only consider empty cells with coordinates 1 ≤ i ≤ 8 and 1 ≤ j ≤ 8.
+Consider only empty cells with 1 ≤ i ≤ 8 and 1 ≤ j ≤ 8.
 
 Choose randomly among these “safe” cells.
 
 Strengths
-Avoids positions that are more vulnerable to being surrounded.
+Avoids vulnerable edge positions
 
-Good for beginners to understand positional safety.
+Good for learning positional safety
 
 Weaknesses
-Ignores the opponent.
+Ignores opponent
 
-Ignores the center.
+Ignores center control
 
-4. 04_aggressiveBot.js — Enemy‑Proximity Strategy
+04_aggressiveBot.js — Enemy‑Proximity Strategy
 Idea
-The bot tries to place pieces next to enemy pieces to apply pressure.
+Place pieces next to enemy pieces to apply pressure.
 
 Algorithm
-For each empty cell, count how many enemy pieces are adjacent orthogonally.
+For each empty cell, count orthogonally adjacent enemy pieces.
 
-Choose the cell with the highest enemy adjacency score.
+Choose the cell with the highest adjacency score.
 
 Strengths
-Good for aggressive, tactical play.
+Encourages tactical, aggressive play
 
-Can trigger auto‑eat situations.
+Can trigger auto‑eat situations
 
 Weaknesses
-Sometimes overextends.
+Sometimes overextends
 
-Can place pieces into dangerous clusters.
+Can move into dangerous clusters
 
-5. 05_defensiveBot.js — Danger‑Avoidance Strategy
+05_defensiveBot.js — Danger‑Avoidance Strategy
 Idea
-The bot avoids positions where many enemy pieces are nearby.
+Avoid positions where many enemy pieces are nearby.
 
 Algorithm
 For each empty cell, count enemy pieces in the 3×3 neighborhood.
@@ -124,33 +115,36 @@ For each empty cell, count enemy pieces in the 3×3 neighborhood.
 Choose the cell with the lowest danger score.
 
 Strengths
-Very stable defensive play.
+Very stable defensive play
 
-Harder to surround or auto‑eat.
+Harder to surround or auto‑eat
 
 Weaknesses
-Passive.
+Passive
 
-Does not pressure the opponent.
+Does not pressure the opponent
 
-6. myBot_template.js — Student Starter Template
-Purpose
-A clean, minimal template for students to implement their own strategy.
+📄 Templates
+myBot_template.js — Starter Template for Students
+A clean, minimal template for writing a bot manually.
 
-Contains
-Basic structure of a CTOR bot.
+Contains:
 
-Example of a legal move.
+the required function structure
 
-Comments explaining where to insert logic.
+an example of a legal move
 
-7. LLM_bot_prompt_template.js — Prompt Template for AI‑Generated Bots
-Purpose
+comments showing where to insert logic
+
+LLM_bot_prompt_template.js — Prompt Template for AI‑Generated Bots
 A ready‑to‑use prompt for ChatGPT, Copilot, Claude, etc.
 
-Contains
-Exact API requirements.
+Contains:
 
-Strict formatting rules.
+exact CTOR Bot API requirements
 
-Instructions to return only JavaScript code.
+strict formatting rules
+
+instructions to return only JavaScript code
+
+guidance for generating a valid bot using an LLM
