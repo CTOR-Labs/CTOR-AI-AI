@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html>
 <head>
 <meta charset="UTF-8">
 <title>CTOR Tournament — Browser Edition</title>
@@ -149,38 +151,42 @@ td.replace-selected::after {
     <button id="autoBtn">Auto Play</button>
     <button id="stopBtn">Stop</button>
   </div>
-<div style="margin-top:10px;">
-  <label>Delay: </label>
-  <input id="delayInput" type="text" value="0.50" style="width:60px;"> sec
-</div>
 
-<!-- ===== Таблица всех ботов ===== -->
-<h3>Available Bots</h3>
-<div id="botTableContainer">
-  <table id="botTable">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Source</th>
-      </tr>
-    </thead>
-    <tbody id="botTableBody">
-      <!-- строки добавляются динамически -->
-    </tbody>
-  </table>
-</div>
+  <div style="margin-top:10px;">
+    <label>Delay: </label>
+    <input id="delayInput" type="text" value="0.50" style="width:60px;"> sec
+  </div>
 
-<!-- ===== Статус ===== -->
-<div id="status">Status: ready.</div>
+  <!-- ===== Таблица всех ботов ===== -->
+  <h3>Available Bots</h3>
+  <div id="botTableContainer">
+    <table id="botTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Source</th>
+        </tr>
+      </thead>
+      <tbody id="botTableBody">
+        <!-- строки добавляются динамически -->
+      </tbody>
+    </table>
+  </div>
 
-<!-- ===== Счёт ===== -->
-<div id="scoreBox">
-  Score: R = <span id="scoreR">0</span> |
-  B = <span id="scoreB">0</span>
+  <!-- ===== Статус ===== -->
+  <div id="status">Status: ready.</div>
+
+  <!-- ===== Счёт ===== -->
+  <div id="scoreBox">
+    Score: R = <span id="scoreR">0</span> |
+    B = <span id="scoreB">0</span>
+  </div>
+
 </div>
 
 <!-- ===== Поле CTOR ===== -->
 <table id="board"></table>
+
 <script>
 /* ============================================================
    CTOR-MINIMAL v3 — GAME ENGINE (Variant A1)
@@ -309,33 +315,33 @@ class CTORGame {
      ============================================================ */
 
   autoEat() {
-  let changed = true;
+    let changed = true;
 
-  while (changed) {
-    changed = false;
+    while (changed) {
+      changed = false;
 
-    for (let i = 0; i < this.N; i++) {
-      for (let j = 0; j < this.N; j++) {
+      for (let i = 0; i < this.N; i++) {
+        for (let j = 0; j < this.N; j++) {
 
-        const cell = this.board[i][j];
+          const cell = this.board[i][j];
 
-        // проверяем только фишки противника
-        if (cell !== '.' && cell !== this.current) {
+          // проверяем только фишки противника
+          if (cell !== '.' && cell !== this.current) {
 
-          // ВАЖНО: пересчитываем расширенную доску перед каждой проверкой
-          const ext = this.buildExtendedBoard();
+            // ВАЖНО: пересчитываем расширенную доску перед каждой проверкой
+            const ext = this.buildExtendedBoard();
 
-          const cnt = this.countNeighbors(i, j, this.current, ext);
+            const cnt = this.countNeighbors(i, j, this.current, ext);
 
-          if (cnt >= 5) {
-            this.board[i][j] = this.current;
-            changed = true;
+            if (cnt >= 5) {
+              this.board[i][j] = this.current;
+              changed = true;
+            }
           }
         }
       }
     }
   }
-}
 
   /* ============================================================
      EXTENDED BOARD FOR TOROID
@@ -431,6 +437,7 @@ class CTORGame {
   }
 }
 </script>
+
 <script>
 /* ============================================================
    BUILT-IN BOTS
@@ -490,7 +497,7 @@ function evaluateBoard(b, player) {
 }
 
 /* ============================================================
-   BOT UPLOAD
+   BOT UPLOAD (FIXED)
    ============================================================ */
 
 document.getElementById("uploadBtn").onclick = () => {
@@ -503,11 +510,33 @@ document.getElementById("uploadBtn").onclick = () => {
   reader.onload = (e) => {
     const code = e.target.result;
 
-    Bots[name] = new Function(
-      "board", "player",
-      code + "; return bot(board, player);"
-    );
+    // Clean BOM + leading whitespace
+    function cleanCode(code) {
+      return code
+        .replace(/^\uFEFF/, "")   // remove BOM
+        .replace(/^\s+/, "");     // remove leading whitespace
+    }
 
+    const cleaned = cleanCode(code);
+
+    let botFunc = null;
+
+    try {
+      botFunc = new Function(
+        "board", "player",
+        cleaned + "; return bot(board, player);"
+      );
+    } catch (err) {
+      alert("Ошибка загрузки бота: " + err.message);
+      return;
+    }
+
+    if (typeof botFunc !== "function") {
+      alert("Загруженный файл не определяет функцию bot(board, player).");
+      return;
+    }
+
+    Bots[name] = botFunc;
     botSources[name] = "uploaded (" + new Date().toLocaleTimeString() + ")";
     addBotToSelect(name);
     refreshBotTable();
@@ -547,6 +576,7 @@ function refreshBotTable() {
     body.appendChild(tr);
   }
 }
+
 /* ============================================================
    GAME + VISUALIZATION
    ============================================================ */
@@ -600,23 +630,6 @@ function updateBoardView() {
       : `Turn ${game.turn} — Player ${game.current}`;
 }
 
-/* Step button */
-document.getElementById("stepBtn").onclick = stepOneMove;
-
-/* Auto Play button with delay */
-document.getElementById("autoBtn").onclick = () => {
-  if (autoTimer) return;
-
-  const delay = parseFloat(document.getElementById("delayInput").value) * 1000;
-  autoTimer = setInterval(stepOneMove, isNaN(delay) ? 500 : delay);
-};
-
-/* Stop button */
-document.getElementById("stopBtn").onclick = () => {
-  clearInterval(autoTimer);
-  autoTimer = null;
-};
-
 /* ============================================================
    MATCH CONTROL
    ============================================================ */
@@ -640,6 +653,10 @@ document.getElementById("stopBtn").onclick = () => {
   autoTimer = null;
 };
 
+/* ============================================================
+   ONE STEP (FIXED BOT CALL)
+   ============================================================ */
+
 function stepOneMove() {
   if (game.finished) {
     clearInterval(autoTimer);
@@ -653,9 +670,29 @@ function stepOneMove() {
     ? document.getElementById("botR").value
     : document.getElementById("botB").value;
 
-  const move = Bots[botName](game.cloneBoard(), player);
+  const botFunc = Bots[botName];
+
+  if (typeof botFunc !== "function") {
+    alert(`Bot "${botName}" не найден или не является функцией.`);
+    clearInterval(autoTimer);
+    autoTimer = null;
+    return;
+  }
+
+  let move = null;
+
+  try {
+    // передаём клон доски, как и раньше
+    move = botFunc(game.cloneBoard(), player);
+  } catch (err) {
+    alert(`Bot "${botName}" завершился с ошибкой: ` + err.message);
+    clearInterval(autoTimer);
+    autoTimer = null;
+    return;
+  }
 
   if (!move) {
+    // бот пасует — завершаем ход
     game.endTurn();
     updateBoardView();
     return;
@@ -681,5 +718,6 @@ function init() {
 
 init();
 </script>
-</body> 
+
+</body>
 </html>
