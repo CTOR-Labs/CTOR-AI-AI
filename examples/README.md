@@ -148,3 +148,61 @@ strict formatting rules
 instructions to return only JavaScript code
 
 guidance for generating a valid bot using an LLM
+
+Вот готовый блок, который ты можешь вставить в конец README:
+
+markdown
+---
+
+## 📌 API Notes for Example Bots
+
+All example bots in this folder follow the **CTOR Browser Edition External Bot API**.  
+This ensures full compatibility with the game engine and consistent behavior across all bots.
+
+### ✔ Required Function Signature
+
+```js
+function bot(board, player) { ... }
+✔ Legal Moves
+Bots must obtain all legal moves using:
+
+js
+const moves = game.getLegalMoves(player);
+This list already respects CTOR turn rules:
+
+up to 2 PUT operations per turn
+
+up to 2 MOVE operations per turn
+
+automatic turn termination when limits are reached
+
+automatic autoEat after each operation
+
+✔ Returning a Move
+Bots must return exactly one move object from the list:
+
+js
+return moves[index];
+If no moves are available:
+
+js
+return null;
+✔ Move Object Format
+A legal move is always one of:
+
+js
+{ type: "put", i, j }
+or
+
+js
+{ type: "move", from:[i,j], to:[i2,j2] }
+✔ Restrictions
+Bots must not modify the board directly.
+
+Bots must not generate multiple moves.
+
+Bots must not attempt to perform more than one operation per turn.
+
+Bots must not scan the board for illegal moves — only moves from getLegalMoves are allowed.
+
+These rules ensure that all example bots behave consistently with the CTOR engine and serve as correct references for students.
