@@ -1,136 +1,208 @@
-<div align="center">🎓 CTOR GAME — Student Assignment Guide</div>
-<div align="center">Instructions for Completing All Three Required Tasks</div>
-This guide describes the three mandatory assignments for working with the CTOR GAME AI‑vs‑AI Platform.
-Each student must complete all three tasks and submit the required deliverables.
+CTOR GAME — Student Assignment Guide
+Short Edition (2–3 pages) — Updated for CTOR Browser Edition
+📘 Overview of Required Tasks
+Each student must complete all three mandatory assignments:
 
-📘 Overview of the Three Tasks
-Task	Description	Deliverable
+Task	Description	Deliverables
 1	Download and test the CTOR GAME platform locally	Bug report (if bugs found)
-2	Design a heuristic algorithm and generate an AI‑written bot	Bot file + the prompt used
-3	Implement your own bot manually in JavaScript	Bot file + short algorithm description
+2	Create an AI‑generated bot using an LLM	Bot file + prompt
+3	Implement your own JavaScript bot manually	Bot file + short description
 🧩 Task 1 — Download and Test the Platform
-✔ What you must do
-Go to the CTOR GAME GitHub repository.
+✔ What You Must Do
+Visit the CTOR GAME GitHub repository.
 
-Download the platform (either the entire repository or just index.html).
+Download the platform (entire repo or just index.html).
 
-Run it locally on your computer:
+Run it locally by opening index.html in any modern browser.
 
-open index.html in any modern browser
+Test the following:
 
-test the built‑in bots (random, greedy)
+built‑in bots (random, greedy)
 
-test uploading example bots
+uploading example bots
 
-verify that the board, controls, and match runner work correctly
+board rendering and controls
 
-✔ If you find bugs
-Prepare a bug report that includes:
+match runner (Start, Next Move, Auto, Stop)
 
-a clear description of the issue
+correct turn switching and game termination
+
+✔ If You Find Bugs
+Prepare a bug report including:
+
+clear description of the issue
 
 steps to reproduce
 
-screenshots (optional but helpful)
+screenshots (optional)
 
-your browser and operating system
+browser + OS
 
-any error messages from the browser console
+any console error messages
 
-Submit the report to the instructors.
-
-If no bugs are found, simply state:
+If no bugs are found, submit:
 
 “No bugs detected during testing.”
 
-🤖 Task 2 — Create an AI‑Generated Bot Using a Prompt
-In this task, you must:
+🤖 Task 2 — Create an AI‑Generated Bot (LLM Bot)
+In this task, you will:
 
-Design your own heuristic algorithm for playing CTOR.
+Design your own heuristic strategy for CTOR.
 
-Describe the algorithm as a prompt for an AI system (e.g., ChatGPT, Copilot, Claude).
+Describe it as a prompt for an AI model (ChatGPT, Copilot, Claude, etc.).
 
-Use the prompt to generate a bot in JavaScript.
+Use the model to generate a JavaScript bot.
 
-Ensure the bot follows the CTOR Browser Edition Bot API.
+Test the bot in the CTOR Browser Edition.
 
-Test the bot locally using the platform.
+✔ Requirements for AI‑Generated Bots
+Your bot must implement:
 
-✔ Naming Requirements
-Your bot file must follow this format:
+js
+function bot(board, player) { ... }
+And must follow the CTOR Bot API:
 
+use game.getLegalMoves(player)
+
+return exactly one legal move
+
+return null if no moves are available
+
+do not modify the board directly
+
+do not perform multiple operations per turn
+
+do not generate arrays of moves
+
+✔ File Naming Format
 Code
 LastName_FirstName_AlgorithmName_Version_AI.js
-Where:
+Example:
 
-AI means the bot was generated using an AI prompt
-
-Version examples: v1, v2, v1.1
-
-✔ Example filename
 Code
 Ivanov_Petr_GreedyHeuristic_v1_AI.js
 ✔ What to Submit
-The AI‑generated bot file
+the AI‑generated bot file
 
-The exact prompt you used to generate it
+the exact prompt used to generate it
 
-Both must be submitted to the instructors.
-
-🛠 Task 3 — Implement Your Own Bot Manually (No AI Tools)
-In this task, you must:
-
-Implement your own heuristic or algorithmic strategy by writing JavaScript manually.
-
-Follow the CTOR GAME Bot API exactly.
-
-Test your bot locally using the platform.
-
-✔ Naming Requirements
-Your bot file must follow this format:
+📌 Recommended Prompt Template for LLM Bots
+Students may use the following template:
 
 Code
+You are generating a CTOR GAME bot for the CTOR Browser Edition.
+
+The bot must implement:
+function bot(board, player) { ... }
+
+Rules:
+- board is a 10×10 array containing "R", "B", or "."
+- player is "R" or "B"
+- You must call: const moves = game.getLegalMoves(player)
+- If moves.length === 0 → return null
+- Return exactly ONE move object from the list
+- A move is either:
+  { type: "put", i, j }
+  or
+  { type: "move", from:[i,j], to:[i2,j2] }
+- Do NOT modify the board directly
+- Do NOT generate multiple moves
+- Do NOT perform more than one operation per turn
+
+Your task:
+Implement the heuristic described below:
+
+[STUDENT INSERTS THEIR STRATEGY HERE]
+
+Return only the final JavaScript code.
+🛠 Task 3 — Implement Your Own Bot Manually (JavaScript Bot)
+In this task, you must:
+
+write your own bot manually in JavaScript
+
+implement a heuristic or algorithmic strategy
+
+follow the CTOR Bot API
+
+test your bot locally
+
+✔ Requirements for Manual Bots
+Your bot must:
+
+implement function bot(board, player)
+
+use game.getLegalMoves(player)
+
+return null if no moves are available
+
+return exactly one legal move
+
+not modify the board
+
+not perform multiple operations per turn
+
+✔ File Naming Format
+Code
 LastName_FirstName_AlgorithmName_Version_P.js
-Where:
+Example:
 
-P means “Programmed manually” (no AI assistance)
-
-✔ Example filename
 Code
 Ivanov_Petr_BlockingStrategy_v2_P.js
 ✔ What to Submit
-The manually written bot file
+the manually written bot file
 
-A short description of your algorithm (3–10 sentences)
+a short description of your algorithm (3–10 sentences)
 
-📤 Submission Requirements
+📌 JavaScript Bot Template (Correct & Fully Compatible)
+Students should use this template:
+
+js
+function bot(board, player) {
+  // Get legal moves (respects CTOR turn limits)
+  const moves = game.getLegalMoves(player);
+
+  // If no moves available — pass
+  if (moves.length === 0) return null;
+
+  // Example strategy: choose the first legal move
+  // (students replace this with their own logic)
+  return moves[0];
+}
+This template ensures:
+
+correct turn behavior
+
+no infinite move loops
+
+compatibility with the CTOR Browser Edition
+
+📤 Submission Checklist
 Each student must submit:
 
-✔ From Task 1
-Bug report (if bugs found)
+✔ Task 1
+bug report (if applicable)
 
-✔ From Task 2
+✔ Task 2
 AI‑generated bot file
 
-The prompt used to generate it
+the prompt used to generate it
 
-✔ From Task 3
-Manually written bot file
+✔ Task 3
+manually written bot file
 
-Short algorithm description
+short algorithm description
 
-Submit all files to the instructors.
-After review, your bots may be added to the official CTOR GAME repository.
+After review, selected bots may be added to the official CTOR GAME repository.
 
 🧠 Tips for Success
-Test your bots against built‑in bots and example bots.
+Test your bots against built‑in and example bots.
 
-Start with simple heuristics and improve them iteratively.
+Start with simple heuristics and refine them.
 
-Make sure your bot always returns a legal move.
+Ensure your bot always returns a legal move.
 
-Use the myBot_template.js file as a reference.
+Use the templates provided in this guide.
 
-Keep your code clean, readable, and well‑structured.
+Keep your code clean and readable.
 
-Document your heuristic logic clearly.
+Document your strategy clearly.
