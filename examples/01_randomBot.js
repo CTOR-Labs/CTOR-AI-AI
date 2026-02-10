@@ -1,10 +1,10 @@
-function bot(board, player) {
-  const moves = [];
-  for (let i = 0; i < 10; i++)
-    for (let j = 0; j < 10; j++)
-      if (board[i][j] === ".")
-        moves.push({ type: "put", i, j });
+// 01_randomBot.js
+// Strategy: choose a completely random legal move.
 
+function bot(board, player) {
+  const moves = game.getLegalMoves(player);
   if (moves.length === 0) return null;
-  return moves[Math.floor(Math.random() * moves.length)];
+
+  const idx = Math.floor(Math.random() * moves.length);
+  return moves[idx];
 }
