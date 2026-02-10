@@ -1,130 +1,336 @@
-```
-   ██████╗████████╗ ██████╗ ██████╗      ██████╗  █████╗ ███╗   ███╗███████╗
-  ██╔════╝╚══██╔══╝██╔═══██╗██╔══██╗    ██╔════╝ ██╔══██╗████╗ ████║██╔════╝
-  ██║        ██║   ██║   ██║██████╔╝    ██║  ███╗███████║██╔████╔██║█████╗  
-  ██║        ██║   ██║   ██║██╔══██╗    ██║   ██║██╔══██║██║╚██╔╝██║██╔══╝  
-  ╚██████╗   ██║   ╚██████╔╝██║  ██║    ╚██████╔╝██║  ██║██║ ╚═╝ ██║███████╗
-   ╚═════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝     ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝
-```
+<div align="center">📘 CTOR Browser Edition</div>
+<div align="center">An Educational & Research Platform for AI Bot Development in the Abstract Game CTOR</div>
+<div align="center">
+CTOR is a unique abstract strategy game played on a toroidal board.
+This browser‑based edition provides a practical environment for teaching AI, algorithms, heuristics, Monte‑Carlo methods, and neural strategies.
+</div>
 
-# 🎮 **CTOR GAME — AI vs AI Platform**
-*A minimal, browser‑based environment for developing and testing CTOR bots.*
+📑 Table of Contents
+🌟 About the Project
 
----
+🎓 1. Educational Purpose
 
-## 🚀 Features
+🏆 2. Competitions & Tournaments
 
-- 🧠 Full CTOR GAME engine  
-- 🎨 Visual 8×8 board  
-- ▶️ Step‑by‑step and auto‑play modes  
-- 🤖 Built‑in bots  
-- 📤 Upload your own bots (`.js` files)  
-- ✔️ Move validation & win detection  
-- 🧩 Simple API for writing bots  
-- 📁 Example bots included  
+🎮 3. Game Rules (Browser Edition)
 
----
+🤖 4. How to Write Your Own AI Bot
 
-## 📥 Run the Platform Locally
+🅰️ A. Writing a Bot Manually
 
-1. Download or clone this repository.  
-2. Open **`index.html`** in any modern browser.  
-3. The platform loads instantly — no server required.
+🅱️ B. Generating a Bot with an LLM
 
----
+📌 LLM‑Friendly Bot Generator Template
 
-## 🧠 Bot API Overview
+🧩 Five Ready‑to‑Use Example Bots
 
-A CTOR bot is a JavaScript function:
+🧪 5. How to Test Your Bot
 
-```js
-export function myBot(board, color) {
-  return { row: Number, col: Number };
+📁 Repository Structure
+
+📄 License
+
+🌟 About the Project
+CTOR Browser Edition is a fully client‑side implementation of the CTOR game.
+It is designed for:
+
+universities
+
+research groups
+
+educators
+
+AI and algorithms courses
+
+student competitions
+
+experimental AI development
+
+The platform enables:
+
+students to develop their own AI bots
+
+instructors to integrate CTOR into coursework
+
+researchers to explore complex dynamic systems
+
+organizers to run tournaments and challenges
+
+Everything runs locally in the browser, with no installation or backend required.
+
+🎓 1. Educational Purpose
+CTOR Browser Edition is ideal for courses in:
+
+Artificial Intelligence
+
+Algorithms & Data Structures
+
+Discrete Mathematics
+
+Game Theory
+
+Neural Networks
+
+Heuristics & Optimization
+
+Monte‑Carlo Methods
+
+Collective Intelligence Models
+
+Students can:
+write bots manually in JavaScript
+
+generate bots using LLMs
+
+experiment with heuristics
+
+analyze decision‑making strategies
+
+study emergent behavior on a toroidal grid
+
+Instructors can:
+embed CTOR into lectures and labs
+
+assign bot‑building projects
+
+demonstrate algorithmic concepts
+
+run in‑class tournaments
+
+🏆 2. Competitions & Tournaments
+CTOR is one of the most complex abstract games for which no strong AI algorithms currently exist.
+
+This makes it perfect for:
+
+university AI competitions
+
+faculty‑wide tournaments
+
+semester‑long projects
+
+research challenges
+
+Every student has a real chance to create the strongest CTOR bot in the world.
+
+The competitive aspect dramatically increases engagement and motivation.
+
+🎮 3. Game Rules (Browser Edition)
+✔ Board
+Size: 10×10
+
+Toroidal topology (edges wrap around)
+
+✔ Each turn consists of two phases (in any order)
+1) PUT — placing pieces
+A player may place two pieces on any empty cells.
+
+2) MOVE — moving pieces
+A player may:
+
+move two pieces by 1 cell, or
+
+move one piece by 2 cells
+
+Moves are orthogonal (up/down/left/right).
+
+✔ AUTO‑EAT — automatic replacement
+After each action, the engine automatically replaces any piece that is:
+
+surrounded by 5 or more opponent pieces
+
+within a 3×3 neighborhood
+
+using toroidal adjacency
+
+✔ Game end
+The game ends when:
+
+both players have no legal moves, or
+
+the board is full
+
+✔ Winner
+The player with more pieces on the board wins.
+
+🤖 4. How to Write Your Own AI Bot
+There are two ways to create a bot:
+
+🅰️ A. Writing a Bot Manually
+Create a file:
+
+Code
+myBot.js
+Insert the following structure:
+
+js
+function bot(board, player) {
+  // Example: place a piece on the first empty cell
+  for (let i = 0; i < 10; i++) {
+    for (let j = 0; j < 10; j++) {
+      if (board[i][j] === ".") {
+        return { type: "put", i, j };
+      }
+    }
+  }
+  return null;
 }
-```
+✔ Requirements
+Requirement	Description
+Function name	Must be bot
+Exports	No export/import allowed
+File type	.js
+Encoding	UTF‑8
+Return value	A valid CTOR move
+✔ Valid move formats
+PUT:
+js
+{ type: "put", i: row, j: col }
+MOVE:
+js
+{
+  type: "move",
+  from: [i1, j1],
+  to:   [i2, j2]
+}
+No moves:
+js
+return null;
+🅱️ B. Generating a Bot with an LLM
+If students use ChatGPT, Copilot, Claude, etc., they must give the model a strict template.
 
-Where:
+Below is the official prompt.
 
-| Parameter | Description |
-|----------|-------------|
-| `board` | 10×10 array with `"R"`, `"B"`, `"."` |
-| `color` | `"R"` or `"B"` |
-| return | `{ row, col }` — your chosen move |
+📌 LLM‑Friendly Bot Generator Template
+Code
+Write a JavaScript bot for CTOR Browser Edition.
 
-If the bot returns an illegal move → it loses automatically.
+Requirements:
 
----
+1. The file must contain exactly one function:
+   function bot(board, player) { ... }
 
-## 📁 Repository Structure
+2. Do NOT use export, import, or module.exports.
 
-```
-CTOR-AI-AI/
-│
-├── index.html
-├── README.md
-├── CTOR_GAME_Student_Assignments.md
-├── LICENSE
-│
-└── examples/
-    ├── myBot_template.js
-    ├── randomBot.js
-    ├── greedyBot.js
-    └── README_examples.md
-```
+3. The function must return one move:
+   { type: "put", i, j }
+   or
+   { type: "move", from:[i1,j1], to:[i2,j2] }
+   or null.
 
----
+4. board is a 10×10 array of "R", "B", ".".
+   player is "R" or "B".
 
-## 🎓 Student Assignments
+5. Return only JavaScript code with no explanation.
+🧩 Five Ready‑to‑Use Example Bots
+1. RandomBot — pure randomness
+js
+function bot(board, player) {
+  const moves = [];
+  for (let i = 0; i < 10; i++)
+    for (let j = 0; j < 10; j++)
+      if (board[i][j] === ".")
+        moves.push({ type: "put", i, j });
 
-All tasks are described here:
+  if (moves.length === 0) return null;
+  return moves[Math.floor(Math.random() * moves.length)];
+}
+2. CenterBot — prefers the center
+js
+function bot(board, player) {
+  let best = null;
+  let bestDist = Infinity;
 
-👉 **[CTOR_GAME_Student_Assignments.md](CTOR_GAME_Student_Assignments.md)**
+  for (let i = 0; i < 10; i++)
+    for (let j = 0; j < 10; j++)
+      if (board[i][j] === ".") {
+        const d = Math.abs(i - 5) + Math.abs(j - 5);
+        if (d < bestDist) {
+          bestDist = d;
+          best = { type: "put", i, j };
+        }
+      }
 
-Students must complete:
+  return best;
+}
+3. BorderAvoidBot — avoids edges
+js
+function bot(board, player) {
+  const moves = [];
+  for (let i = 1; i < 9; i++)
+    for (let j = 1; j < 9; j++)
+      if (board[i][j] === ".")
+        moves.push({ type: "put", i, j });
 
-1. Test the platform locally  
-2. Create an AI‑generated heuristic bot  
-3. Implement a manual JavaScript bot  
+  if (moves.length === 0) return null;
+  return moves[Math.floor(Math.random() * moves.length)];
+}
+4. AggressiveBot — plays next to enemy pieces
+js
+function bot(board, player) {
+  const enemy = player === "R" ? "B" : "R";
+  const moves = [];
 
----
+  for (let i = 0; i < 10; i++)
+    for (let j = 0; j < 10; j++)
+      if (board[i][j] === ".") {
+        const neigh =
+          (board[(i+1)%10][j] === enemy) +
+          (board[(i+9)%10][j] === enemy) +
+          (board[i][(j+1)%10] === enemy) +
+          (board[i][(j+9)%10] === enemy);
 
-## 🧩 Example Bots
+        moves.push({ move: { type:"put", i, j }, score: neigh });
+      }
 
-Located in the `examples/` folder:
+  moves.sort((a,b)=>b.score-a.score);
+  return moves[0].move;
+}
+5. DefensiveBot — avoids dangerous positions
+js
+function bot(board, player) {
+  let best = null;
+  let bestScore = Infinity;
 
-| Bot | Description |
-|-----|-------------|
-| `myBot_template.js` | Fully commented starter template |
-| `randomBot.js` | Random legal move |
-| `greedyBot.js` | Move with maximum capture score |
-| `README_examples.md` | Documentation for all examples |
+  for (let i = 0; i < 10; i++)
+    for (let j = 0; j < 10; j++)
+      if (board[i][j] === ".") {
+        let danger = 0;
+        for (let di=-1; di<=1; di++)
+          for (let dj=-1; dj<=1; dj++)
+            if (!(di===0 && dj===0)) {
+              const ni = (i+di+10)%10;
+              const nj = (j+dj+10)%10;
+              if (board[ni][nj] !== "." && board[ni][nj] !== player)
+                danger++;
+            }
 
----
+        if (danger < bestScore) {
+          bestScore = danger;
+          best = { type:"put", i, j };
+        }
+      }
 
-## 🛠 Uploading Your Bot
+  return best;
+}
+🧪 5. How to Test Your Bot
+Download index.html
 
-1. Open `index.html`  
-2. Scroll to **Upload Custom Bot**  
-3. Select your `.js` file  
-4. Choose it as Bot R or Bot B  
-5. Start a match  
+Open it in any browser
 
----
+Click Choose File
 
-## 🤝 Contributing
+Select your .js bot file
 
-We welcome:
+Click Upload Bot
 
-- bug reports  
-- new bots  
-- heuristic strategies  
-- documentation improvements  
+Your bot appears in Available Bots
 
-Accepted bots will be added to the repository.
+Select it as Bot R or Bot B
 
----
+Start a match
 
-## 📄 License
+Test against built‑in bots:
 
-Released under the MIT License.
+random
 
+greedy
