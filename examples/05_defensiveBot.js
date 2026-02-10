@@ -1,25 +1,48 @@
+// 05_defensiveBot.js
+// Strategy: avoid dangerous cells; prefer moves with fewer enemy pieces in the 3×3 neighborhood.
+
 function bot(board, player) {
-  let best = null;
-  let bestScore = Infinity;
+  const moves = game.getLegalMoves(player);
+  if (moves.length === 0) return null;
 
-  for (let i = 0; i < 10; i++)
-    for (let j = 0; j < 10; j++)
-      if (board[i][j] === ".") {
-        let danger = 0;
-        for (let di=-1; di<=1; di++)
-          for (let dj=-1; dj<=1; dj++)
-            if (!(di===0 && dj===0)) {
-              const ni = (i+di+10)%10;
-              const nj = (j+dj+10)%10;
-              if (board[ni][nj] !== "." && board[ni][nj] !== player)
-                danger++;
-            }
+  const N = board.length;
+  const enemy = (player === "R") ? "B" : "R";
 
-        if (danger < bestScore) {
-          bestScore = danger;
-          best = { type:"put", i, j };
-        }
+  function countEnemyIn3x3(i, j) {
+    let c = 0;
+    for (let di = -1; di <= 1; di++) {
+      for (let dj = -1; dj <= 1; dj++) {
+        if (di === 0 && dj === 0) continue;
+        const ni = (i + di + N) % N;
+        const nj = (j + dj + N) % N;
+        if (board[ni][nj] === enemy) c++;
       }
+    }
+    return c;
+  }
 
-  return best;
+  let best = null;
+  let bestDanger = Infinity;
+
+  for (const m of moves) {
+    let ti, tj;
+
+    if (m.type === "put") {
+      ti = m.i;
+      tj = m.j;
+    } else if (m.type === "move") {
+      [ti, tj] = m.to;
+    } else {
+      continue;
+    }
+
+    const danger = countEnemyIn3x3(ti, tj);
+
+    if (danger < bestDanger) {
+      bestDanger = danger;
+      best = m;
+    }
+  }
+
+  return best || moves[0];
 }
