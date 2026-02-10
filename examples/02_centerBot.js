@@ -1,16 +1,20 @@
 function bot(board, player) {
+  // Получаем легальные ходы с учётом лимитов
+  const moves = game.getLegalMoves(player);
+  if (moves.length === 0) return null;
+
   let best = null;
   let bestDist = Infinity;
 
-  for (let i = 0; i < 10; i++)
-    for (let j = 0; j < 10; j++)
-      if (board[i][j] === ".") {
-        const d = Math.abs(i - 5) + Math.abs(j - 5);
-        if (d < bestDist) {
-          bestDist = d;
-          best = { type: "put", i, j };
-        }
+  for (const m of moves) {
+    if (m.type === "put") {
+      const d = Math.abs(m.i - 5) + Math.abs(m.j - 5);
+      if (d < bestDist) {
+        bestDist = d;
+        best = m;
       }
+    }
+  }
 
   return best;
 }
