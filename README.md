@@ -1,8 +1,9 @@
-<div align="center">📘 CTOR Browser Edition</div>
+<div align="center">📘 CTOR AI-AI PC Edition</div>
 <div align="center">An Educational & Research Platform for AI Bot Development in the Abstract Game CTOR</div>
 <div align="center">
 CTOR is a unique abstract strategy game played on a toroidal board.
 This browser‑based edition provides a practical environment for teaching AI, algorithms, heuristics, Monte‑Carlo methods, and neural strategies.
+Perplexity/Copilot  
 </div>
 
 ---
