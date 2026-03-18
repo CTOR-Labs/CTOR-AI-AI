@@ -1,5 +1,5 @@
 CTOR GAME — Student Assignment Guide
-Short Edition (2–3 pages) — Updated for CTOR Browser Edition
+Short Edition (2–3 pages) — Updated for CTOR AI-AI PC Edition
 📘 Overview of Required Tasks
 Each student must complete all three mandatory assignments:
 
